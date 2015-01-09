@@ -4,10 +4,10 @@
             [ring.middleware.file-info :refer [wrap-file-info]]
             [hiccup.middleware :refer [wrap-base-url]]
             [compojure.handler :as handler]
-             [compojure.route :as route]
-            [movies-app.routes.movie :refer [movie-routes]]
-             [movies-app.routes.home :refer [home-routes]]            
-           [noir.util.middleware :as noir-middleware] ))
+            [compojure.route :as route]
+            [movies-app.routes.login :refer [login-routes]]
+            [movies-app.routes.home :refer [home-routes]]            
+            [noir.util.middleware :as noir-middleware] ))
  
 (defn init []
   (println "Movies app is starting"))
@@ -21,5 +21,5 @@
 
 (def app
 (noir-middleware/app-handler 
-    [home-routes movie-routes app-routes]))
+    [login-routes home-routes app-routes]))
   

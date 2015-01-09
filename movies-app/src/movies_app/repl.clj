@@ -22,7 +22,7 @@
 (defn start-server
   "Used for starting the server in development mode from REPL"
   [& [port]]
-  (let [port (if port (Integer/parseInt port) 8080)]
+  (let [port (if port (Integer/parseInt port) 9001)]
     (reset! server
             (serve (get-handler)
                    {:port port
@@ -30,6 +30,7 @@
                     :auto-reload? true
                     :destroy destroy
                     :join true}))
+    (init-db)
     (println (str "You can view the site at http://localhost:" port))))
 
 (defn stop-server []
