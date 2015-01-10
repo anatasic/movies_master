@@ -27,11 +27,11 @@
     (when (= code 200) 
       (:link_template (cheshire/parse-string body true)))))
 
-(defn get-movies-url [template search-term]
+(defn get-movies-url [template search-term page-number]
   (println template)
   (let [search (cs/replace template "{search-term}" (URLEncoder/encode search-term))
-        results (cs/replace search "{results-per-page}" "50")
-        page (cs/replace results "{page-number}" "1")
+        results (cs/replace search "{results-per-page}" "10")
+        page (cs/replace results "{page-number}" (str page-number))
         fin (str page "&apikey=" (get-api-key))]
     fin) 
   )
