@@ -6,7 +6,8 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [movies-app.routes.login :refer [login-routes]]
-            [movies-app.routes.home :refer [home-routes]]            
+            [movies-app.routes.home :refer [home-routes]]
+             [movies-app.routes.movie :refer [movie-routes]]   
             [noir.util.middleware :as noir-middleware] ))
  
 (defn init []
@@ -17,9 +18,9 @@
 
 (defroutes app-routes
   (route/resources "/")
-  (route/not-found "Sorry, that page does not exists."))
+  (route/not-found "Sorry, that page does not exist."))
 
 (def app
 (noir-middleware/app-handler 
-    [login-routes home-routes app-routes]))
+    [login-routes home-routes movie-routes app-routes]))
   

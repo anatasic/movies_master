@@ -1,8 +1,8 @@
 (ns movies-app.util.extract
-    (:require
-   [clojure.string :as cs]
-   [clj-http.client :as client]
-   [cheshire.core :as cheshire]))
+  (:require
+    [clojure.string :as cs]
+    [clj-http.client :as client]
+    [cheshire.core :as cheshire]))
 
 (import [java.net URLEncoder])
 
@@ -41,3 +41,31 @@
     (if (= code 200)
       (:movies (cheshire/parse-string body true))     
       nil)))
+
+(defn get-details-movie [movie-id]
+  (let [url (str "http://api.rottentomatoes.com/api/public/v1.0/movies/" movie-id ".json?apikey=" (get-api-key))
+        [code body] (scoop-url url)]
+    (if (= code 200)
+      (cheshire/parse-string body true)     
+      nil)
+    ))
+
+(defn get-reviews-for-movie[movie-id]
+  (let [url (str "http://api.rottentomatoes.com/api/public/v1.0/movies/" movie-id ".json?apikey=" (get-api-key))
+        [code body] (scoop-url url)]
+    (if (= code 200)         
+      (let [reviews (:reviews (:links (cheshire/parse-string body true)))
+            [code body] (scoop-url (str reviews "?apikey=" (get-api-key) ))]     
+        (if (= code 200)
+          (cheshire/parse-string body true)
+          )))))
+
+(defn get-similar-for-movie[movie-id]
+  (let [url (str "http://api.rottentomatoes.com/api/public/v1.0/movies/" movie-id ".json?apikey=" (get-api-key))
+        [code body] (scoop-url url)]
+    (if (= code 200)         
+      (let [similar-movies (:similar (:links (cheshire/parse-string body true)))
+            [code body] (scoop-url (str similar-movies "?apikey=" (get-api-key) ))]     
+        (if (= code 200)
+          (cheshire/parse-string body true)
+          )))))
