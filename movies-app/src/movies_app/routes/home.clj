@@ -39,11 +39,10 @@
       (do
         (layout/common 
           (list-of-movies movies)
-         ;; (println (java.lang.Long/parseLong page))
+       
           (if-not  (> (java.lang.Integer/parseInt page) 1) 
             (do
-              (let [page-no  (session/flash-get :page-no)
-                    ]
+             
                 (layout/common 
                   (if (> (java.lang.Integer/parseInt page) 1)
                     (form-to [:get (str "/search&" (dec (java.lang.Integer/parseInt page)) "&" search-term) ]
@@ -56,7 +55,7 @@
                              )
                     ) 
                   )
-                )              
+                              
               )
             )
           

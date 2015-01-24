@@ -22,13 +22,12 @@
       (:movies (:links (cheshire/parse-string body true))))))
 
 (defn get-template-url [links-url]
-  (println (str links-url "?apikey=" (get-api-key)))
+  
   (let [[code body] (scoop-url (str links-url "?apikey=" (get-api-key)))]
     (when (= code 200) 
       (:link_template (cheshire/parse-string body true)))))
 
 (defn get-movies-url [template search-term page-number]
-  (println template)
   (let [search (cs/replace template "{search-term}" (URLEncoder/encode search-term))
         results (cs/replace search "{results-per-page}" "10")
         page (cs/replace results "{page-number}" (str page-number))
@@ -51,6 +50,7 @@
     ))
 
 (defn get-reviews-for-movie[movie-id]
+  (println (str "REVIEWS" movie-id))
   (let [url (str "http://api.rottentomatoes.com/api/public/v1.0/movies/" movie-id ".json?apikey=" (get-api-key))
         [code body] (scoop-url url)]
     (if (= code 200)         
@@ -60,8 +60,15 @@
           (cheshire/parse-string body true)
           )))))
 
-(defn get-similar-for-movie[movie-id]
-  (let [url (str "http://api.rottentomatoes.com/api/public/v1.0/movies/" movie-id ".json?apikey=" (get-api-key))
+(defn get-reviews-for-movie-pagination[movie]
+  (let [url (str movie "&apikey=" (get-api-key))
+        [code body] (scoop-url url)]
+    (if (= code 200)         
+     (cheshire/parse-string body true)
+    )))
+
+(defn get-similar-for-movie-next[movie]
+  (let [url (str movie "&apikey=" (get-api-key))
         [code body] (scoop-url url)]
     (if (= code 200)         
       (let [similar-movies (:similar (:links (cheshire/parse-string body true)))
@@ -69,3 +76,10 @@
         (if (= code 200)
           (cheshire/parse-string body true)
           )))))
+
+(defn read-review-next [next]
+   (let [url (str  next "&apikey=" (get-api-key))
+        [code body] (scoop-url url)]
+     (if (= code 200)
+          (cheshire/parse-string body true)
+          )))
