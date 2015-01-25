@@ -22,3 +22,11 @@
 (defn validate-password [username password]
   (mc/find-one db "users" {:username username :password password})
   )
+
+(defn add-favorite-movie [username movie-id]
+  (mc/insert db "favorites" {:username username :movie movie-id})
+  )
+
+(defn find-favorites [username]
+  (mc/find-maps db "favorites" {:username username})
+  )

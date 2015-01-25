@@ -64,7 +64,7 @@
         [code body] (scoop-url url)]
     (if (= code 200)         
      (cheshire/parse-string body true)
-    )))
+   )))
 
 (defn get-similar-movies[movie-id] 
   (let [url (str "http://api.rottentomatoes.com/api/public/v1.0/movies/" movie-id ".json?apikey=" (get-api-key))
