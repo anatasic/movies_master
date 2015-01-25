@@ -7,12 +7,13 @@
             [clojure.string :as cs]
             [hiccup.form :refer :all]))
   
-  (defn favorites
+  (defn favorites[]
     (layout/common
       [:h2 "Your favorite movies"]
       )
     )
   
   (defroutes favorites-routes
+     
     (POST "/favorite" [username movie] (favorites))
     )
