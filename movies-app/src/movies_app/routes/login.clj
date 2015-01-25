@@ -78,7 +78,11 @@
       (do
         (session/flash-put! :error-message "Wrong password.")
         (redirect "/"))
-      :else (redirect "/home")
+      :else 
+      (do 
+        (println username)
+        (session/put! :username username)
+        (redirect "/home"))
       )))
 
 (defn register-user [first-name last-name email username password repeat-password]

@@ -12,12 +12,12 @@
 
 (defn display-rating [movie]
   (layout/common
-      [:h2 "Ratings"]
-      [:p "Critics score: "(:critics_score (:ratings movie))]
-      [:p "Critics rating: "(:critics_rating (:ratings movie))]
-      [:p "Audience score: "(:audience_score (:ratings movie))]
-      [:p "Audience rating: "(:audience_rating (:ratings movie))]
-      )
+    [:h2 "Ratings"]
+    [:p "Critics score: "(:critics_score (:ratings movie))]
+    [:p "Critics rating: "(:critics_rating (:ratings movie))]
+    [:p "Audience score: "(:audience_score (:ratings movie))]
+    [:p "Audience rating: "(:audience_rating (:ratings movie))]
+    )
   )
 
 (defn display-genres [movie]
@@ -26,41 +26,41 @@
     [:ul]
     (for [genre (:genres movie)]
       [:li (cs/replace genre "," "") ]
-    )
+      )
     [:ul]
-  )
+    )
   )
 
 (defn display-char [cast]
   (for [char cast]
     (cs/join char)
-  ))
+    ))
 
 (defn display-cast [movie]
   (layout/common
     [:h2 "Cast"]
     [:ul]
     (for [cast (:abridged_cast movie)]
-    [:li (:name cast) " as "  (display-char (:characters cast))]
+      [:li (:name cast) " as "  (display-char (:characters cast))]
       )
     [:ul]
-  ))
+    ))
 
 (defn display-similar [movie]
   (let [similar-movies (util/get-similar-movies movie)]
     
     (layout/common 
       [:h2 "You might also like"]
-     (for [movie similar-movies]
-      [:a {:href (str "/movie&" (:id movie)) } [:img {:src (:thumbnail (:posters movie))}]]
-      
+      (for [movie similar-movies]
+        [:a {:href (str "/movie&" (:id movie)) } [:img {:src (:thumbnail (:posters movie))}]]
+        
+        )
       )
-    )
-  ))
-  
+    ))
+
 (defn show-details[movie-id]
   (let [movie (util/get-details-movie movie-id)]
-  
+    
     (layout/common
       [:h1 "Details about movie"]
       [:img {:src (cs/replace (:detailed (:posters movie)) "_tmb" "_det")}]
@@ -73,8 +73,14 @@
       (display-cast movie)
       [:a {:href (str "/reviews&" movie-id)} "Click to see reviews..."]
       (display-similar movie-id)
+      (println (str "Username" (session/get :username)))
+      (form-to [:post "/add-to-favorites"]
+               [:input {:type "hidden" :name "movie" :value movie-id}]
+               [:input {:type "hidden" :name "username" :value (session/get :username)}]
+               (submit-button "Add to favorites")
+               )
       )
-  ))
+    ))
 
 (defroutes movie-routes 
   (GET "/movie&:id" [id] (show-details id))

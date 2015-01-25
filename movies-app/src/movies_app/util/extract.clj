@@ -42,6 +42,7 @@
       nil)))
 
 (defn get-details-movie [movie-id]
+  (println (str "movie " movie-id))
   (let [url (str "http://api.rottentomatoes.com/api/public/v1.0/movies/" movie-id ".json?apikey=" (get-api-key))
         [code body] (scoop-url url)]
     (if (= code 200)

@@ -27,6 +27,10 @@
   (mc/insert db "favorites" {:username username :movie movie-id})
   )
 
+(defn delete-movie [username movie]
+  (mc/remove db "favorites" {:username username :movie movie})
+  )
+
 (defn find-favorites [username]
   (mc/find-maps db "favorites" {:username username})
   )
