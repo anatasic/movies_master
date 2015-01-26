@@ -19,6 +19,14 @@
   (println (mc/insert db "users" {:username username :first-name first-name :last-name last-name :email email :password password}))
   )
 
+(defn update-user[existing-user new-user]
+   (mc/update db "users" existing-user new-user {:multi false})
+)
+
+(defn get-user [username]
+  (mc/find-one-as-map db "users" {:username username}) 
+  )
+
 (defn validate-password [username password]
   (mc/find-one db "users" {:username username :password password})
   )
@@ -33,4 +41,8 @@
 
 (defn find-favorites [username]
   (mc/find-maps db "favorites" {:username username})
+  )
+
+(defn delete-all-data []
+  (mc/remove db "users")
   )

@@ -28,6 +28,9 @@
   (layout/common 
     [:h1 "Movies"]
     [:p "Welcome to powerful Tomatoer"]
+    [:a {:href "/edit-profile"} "Edit profile"]
+    [:br]
+    [:a {:href "/favorites"} "Favorite movies"]
     [:hr]
     
     (form-to [:post "/search"] 
@@ -92,7 +95,10 @@
 (defroutes home-routes
   (GET "/home" [] (home nil nil 1))
   (GET "/search&:page&:search-term" [page search-term]  (search-for-movies search-term page))
-  (POST "/search" [search-term] (search-for-movies search-term "1") ))
+  (POST "/search" [search-term] (search-for-movies search-term "1") )
+
+  )
+
 
 
 

@@ -24,5 +24,5 @@
 
 (def app
 (noir-middleware/app-handler 
-    [login-routes home-routes movie-routes reviews-routes favorites-routes app-routes ]))
+    [login-routes home-routes movie-routes reviews-routes favorites-routes  app-routes ]))
   
