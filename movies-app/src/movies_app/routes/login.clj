@@ -5,6 +5,7 @@
             [hiccup.element :refer :all]
             [hiccup.core :refer :all]
             [noir.response :refer [redirect]]
+            [noir.util.route :refer [restricted]]
             [noir.session :as session]
             [noir.request :as request]
             [noir.validation :as validator]
@@ -37,7 +38,7 @@
   (let 
     
     [user (db/get-user (str(session/get :username)))]
-  
+    
     (layout/common
       [:div.header 
        [:p "Update profile"
@@ -85,7 +86,7 @@
              )))
 
 (defn number-of-users [username]
-  (= (count (db/username-exists? username)) 1))
+  (= (count (db/username-exists? username)) 0))
 
 (defn validate-registration [first-name last-name email username password]
   (validator/has-values? [first-name last-name email username password]))
@@ -101,7 +102,7 @@
       (do
         (session/flash-put! :error-message "Enter values.")
         (redirect "/"))
-      (= false (number-of-users username)) 
+      (= true (number-of-users username)) 
       (do
         (session/flash-put! :error-message "Username does not exist.")
         (redirect "/"))
@@ -111,9 +112,9 @@
         (redirect "/"))
       :else 
       (do 
-      
+        
         (session/put! :username username)
-       
+        
         (redirect "/home"))
       )))
 
@@ -153,16 +154,16 @@
   (let [existing-user (db/get-user (str (session/get :username)))
         new-user (merge existing-user user)]
     (if-not (.equals (str (session/get :username)) (:username new-user))
-       
-        (session/put! :username (:username new-user))
+      
+      (session/put! :username (:username new-user))
       )
     (db/update-user existing-user new-user)    
-     
+    
     (session/flash-put! :success-message "Profile successfully updated.")
     (redirect "/edit-profile")
     
     )
-;      (println (db/update-user))
+  ;      (println (db/update-user))
   )
 
 (defroutes login-routes
@@ -170,8 +171,8 @@
   (GET "/login" [] (login))
   (POST "/login" [username password] (login-user username password))
   (GET "/register" [] (register))
-  (GET "/edit-profile" [] (edit-profile))
-  (POST "/update" [first-name last-name email username password] (update-user {:first-name first-name :last-name last-name :email email :username username :password password}))
-  (POST "/register" [first-name last-name email username password repeat-password] (register-user first-name last-name email username password repeat-password)
+  (GET "/edit-profile" [] (restricted (edit-profile)))
+  (POST "/update" [first-name last-name email username password] (restricted (update-user {:first-name first-name :last-name last-name :email email :username username :password password})))
+  (POST "/register" [first-name last-name email username password repeat-password] (restricted (register-user first-name last-name email username password repeat-password))
         ))
 

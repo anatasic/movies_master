@@ -1,9 +1,12 @@
 (ns movies-app.routes.movie
   (:require [compojure.core :refer :all]
             [movies-app.views.layout :as layout]
+            [movies-app.routes.login :as login]
+            [movies-app.routes.home :as home]
             [movies-app.util.extract :as util]
             [noir.session :as session]
             [noir.response :refer [redirect]]
+             [noir.util.route :refer [restricted]]
             [clojure.string :as cs]
             [movies-app.util.extract :as util]
             [hiccup.form :refer :all]
@@ -62,7 +65,9 @@
   (let [movie (util/get-details-movie movie-id)]
     
     (layout/common
+    (home/logout)
       [:h1 "Details about movie"]
+      [:p (session/flash-get :movie-exists)]
       [:img {:src (cs/replace (:detailed (:posters movie)) "_tmb" "_det")}]
       [:p "Title: " (:title movie)]
       [:p "Duration: " (:runtime movie) " mins"]
@@ -83,6 +88,6 @@
     ))
 
 (defroutes movie-routes 
-  (GET "/movie&:id" [id] (show-details id))
+  (GET "/movie&:id" [id] (restricted (show-details id)))
   
   )

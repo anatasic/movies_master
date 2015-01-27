@@ -6,6 +6,7 @@
             [noir.response :refer [redirect]]
             [clojure.string :as cs]
             [movies-app.util.extract :as util]
+            [noir.util.route :refer [restricted]]
             [hiccup.form :refer :all])
   )
 
@@ -128,7 +129,7 @@
   ))
 
 (defroutes reviews-routes
-  (GET "/reviews&:id" [id] (display-reviews id))
-  (POST "/next-page-review" [next movie] (display-next-page movie next))
-  (POST "/prev-page-review" [movie prev] (display-previous-page movie prev))
+  (GET "/reviews&:id" [id] (restricted (display-reviews id)))
+  (POST "/next-page-review" [next movie] (restricted (display-next-page movie next)))
+  (POST "/prev-page-review" [movie prev] (restricted (display-previous-page movie prev)))
   )

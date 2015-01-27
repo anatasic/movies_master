@@ -11,6 +11,9 @@
 (defn username-exists? [username]
   (mc/find-maps db "users" {:username username}))
 
+(defn movie-exists? [username movie]
+  (mc/find-maps db "favorites" {:username username :movie movie}))
+
 (defn init-db [] 
   connection
   )
