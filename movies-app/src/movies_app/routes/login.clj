@@ -16,22 +16,21 @@
 (defn login []
   "Login form"
   (layout/common 
-    
-    [:div "Enter login credentials "
-     ]
     (form-to [:post "/login"]     
              (html 
                [:div.login
+                [:h1 "Tomatoer"]
+                [:p "Enter login credentials"]
                 (text-field {:placeholder "username"} :username) 
-                [:br]
+          [:br]
                 (password-field {:placeholder "password"} :password )
                 [:br]
                 
-                (submit-button "Login")
+                (submit-button {:id "btn"} "Login")
                 [:br]
                 [:br]
-                [:div.error (session/flash-get :error-message)]
-                (link-to "/register" "Register")
+          [:div.error (session/flash-get :error-message)]
+          (link-to "/register" "Register")
                 ]))))
 
 (defn edit-profile []

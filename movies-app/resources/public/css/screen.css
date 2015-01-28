@@ -1,10 +1,13 @@
 body {
     color: #555;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 14px;
+     background: url(../img/tomato.gif) no-repeat right top;
+  
 }
 
 h1 {
     text-align: center;
+    color: #D00000;
 }
 

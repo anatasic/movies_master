@@ -5,5 +5,7 @@
   (html5
     [:head
      [:title "Welcome to movies-app"]
-     (include-css "/css/screen.css")]
+     (include-css "/css/screen.css")
+     (include-css "/css/login.css")
+     ]
     [:body body]))
