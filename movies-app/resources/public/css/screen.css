@@ -2,7 +2,9 @@ body {
     color: #555;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     font-size: 14px;
-     background: url(../img/tomato.gif) no-repeat right top;
+    background-image: url(../img/tomato.gif);
+    background-repeat: no-repeat;
+  	background-position: top right;
   
 }
 
@@ -10,4 +12,22 @@ h1 {
     text-align: center;
     color: #D00000;
 }
+
+ .logout { 
+    border: 2px solid #D00000;
+    height: 30px;
+    padding: 5px;
+    color: #D00000;
+    border-radius: 10px;
+    background-color: #F0F0F0;
+    font-weight:bold;
+ }
+ 
+ .logout a{
+ 	float: right;
+ 	padding-left: 15px;
+ 	font-weight:bold;
+	color:#707070 ;
+	text-decoration: none;
+ }
 

@@ -1,0 +1,17 @@
+.registration{
+text-align: center;
+width:50%;
+ position: absolute;
+ top: 20%;
+ left: 20%;
+   
+}
+
+#firstName, #lastName, #password, #repeat, #email {
+ padding: 2px;
+ background-color: white !important;
+ margin-bottom:10px;
+ height: 10%;
+ border-radius: 10px;
+ border-color: #D00000;
+}

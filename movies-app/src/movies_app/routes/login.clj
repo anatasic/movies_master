@@ -22,22 +22,20 @@
                 [:h1 "Tomatoer"]
                 [:p "Enter login credentials"]
                 (text-field {:placeholder "username"} :username) 
-          [:br]
+                [:br]
                 (password-field {:placeholder "password"} :password )
                 [:br]
                 
                 (submit-button {:id "btn"} "Login")
                 [:br]
                 [:br]
-          [:div.error (session/flash-get :error-message)]
-          (link-to "/register" "Register")
+                [:div.error (session/flash-get :error-message)]
+                (link-to "/register" "Register")
                 ]))))
 
 (defn edit-profile []
-  (let 
-    
-    [user (db/get-user (str(session/get :username)))]
-    
+  (let     
+    [user (db/get-user (str(session/get :username)))]    
     (layout/common
       [:div.header 
        [:p "Update profile"
@@ -52,8 +50,7 @@
                (label :username "Username ")
                (text-field {:value (:username user)} :username) 
                (label :password "Password ")
-               (text-field {:value (:password user)} :password )
-               
+               (text-field {:value (:password user)} :password )               
                [:br]
                (submit-button "Save")
                [:br]
@@ -67,22 +64,27 @@
 (defn register []
   "Register form"
   (layout/common
-    [:div.header 
-     [:div "Registration "
-      ]]
-    (form-to [:post "/register"]              
-             (text-field {:placeholder "First name"} :first-name)
-             (text-field {:placeholder "Last name"} :last-name)
-             (text-field {:placeholder "email"} :email) 
-             (text-field {:placeholder "username"} :username) 
-             (password-field {:placeholder "password"} :password )
-             (password-field {:placeholder "repeat password"} :repeat-password )
-             [:br]
-             (submit-button "Register")
-             [:br]
-             [:br]
-             [:div.error (session/flash-get :error-message)]
-             )))
+    
+    [:div.registration 
+     [:h1 "Registration"]
+     (form-to [:post "/register"]              
+              (text-field {:placeholder "First name" :id "firstName"} :first-name)
+              [:br]
+              (text-field {:placeholder "Last name" :id "lastName"} :last-name)
+              [:br]
+              (text-field {:placeholder "Email" :id "email"} :email) 
+              [:br]
+              (text-field {:placeholder "Username" :id "username"} :username) 
+              [:br]
+              (password-field {:placeholder "Password" :id "password"} :password )
+              [:br]
+              (password-field {:placeholder "Repeat password" :id "repeat"} :repeat-password )
+              [:br]
+              (submit-button {:id "btn"} "Register")
+              [:br]
+              [:br]
+              [:div.error (session/flash-get :error-message)]
+              )]))
 
 (defn number-of-users [username]
   (= (count (db/username-exists? username)) 0))

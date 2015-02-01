@@ -21,8 +21,7 @@
     (when (= code 200) 
       (:movies (:links (cheshire/parse-string body true))))))
 
-(defn get-template-url [links-url]
-  
+(defn get-template-url [links-url]  
   (let [[code body] (scoop-url (str links-url "?apikey=" (get-api-key)))]
     (when (= code 200) 
       (:link_template (cheshire/parse-string body true)))))

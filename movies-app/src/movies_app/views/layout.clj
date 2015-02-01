@@ -4,8 +4,10 @@
 (defn common [& body]
   (html5
     [:head
-     [:title "Welcome to movies-app"]
+     [:title "Tomatoer"]
      (include-css "/css/screen.css")
      (include-css "/css/login.css")
+     (include-css "/css/registration.css")
+     (include-css "/css/home.css")
      ]
     [:body body]))

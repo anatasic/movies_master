@@ -1,0 +1,42 @@
+#search{
+ padding: 10px;
+ background-color: #F0F0F0 !important;
+ border-radius: 10px;
+ border-color: #D00000;
+ color:#707070 ;
+ font-weight: bold;
+ margin-left: 20px;
+}
+
+#search-term {
+ padding: 10px;
+ width: 20%;	
+}
+
+.movie{
+	margin-top: 10px;
+	background-color: #F8F8F8;
+	width: 70%;
+	padding: 5px;
+}
+
+.title {
+color:#707070;
+font-weight: bold;
+margin-left:100px;
+margin-top: -70px;
+margin-bottom:70px;
+width:50%;
+}
+
+#details {
+float:right;
+margin-top: -100px;
+margin-right:20px;
+
+}
+
+.next{
+width: 31%;
+float:right;
+}
