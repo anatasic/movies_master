@@ -11,5 +11,7 @@
                  [com.novemberain/monger "2.0.0"]
                  [hickory "0.5.3"]
                  [clj-http "0.9.2"]
-                 [clj-time "0.7.0"]]
+                 [clj-time "0.7.0"]
+                 [hiccup-bootstrap "0.1.2"]
+                 ]
   :main movies-app.repl)

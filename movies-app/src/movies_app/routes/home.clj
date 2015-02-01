@@ -32,52 +32,52 @@
       [:a {:href "/logout"} "Logout"]
       [:a {:href "/edit-profile"} "Edit profile"]
       [:a {:href "/favorites"} "Favorite movies"]
+       [:a {:href "/home"} "Home"]
       ]
      ]
     )  
   )
 
 (defn home [movies search-term page]   
-  (println page)
   (layout/common     
-    (logout)
-    [:h1 "Movies"]
+   (logout)
+   [:h1 "Movies"]
     [:p "Welcome to powerful Tomatoer!"]
-    [:br]    
+   [:br]    
     (form-to [:post "/search"] 
-             (if-not (nil? search-term)
+            (if-not (nil? search-term)
                (text-field {:value search-term} :search-term)
-               (text-field {:placeholder "Enter search term"} :search-term))
+              (text-field {:placeholder "Enter search term"} :search-term))
              (submit-button {:id "search"} "Search"))
-    (if-not (or (nil? movies) (empty? movies))
-      (do
-        (layout/common 
-          (list-of-movies movies)          
-          (if  (> (java.lang.Integer/parseInt page) 1)             
+   (if-not (or (nil? movies) (empty? movies))
+     (do
+       (layout/common 
+         (list-of-movies movies)          
+         (if  (> (java.lang.Integer/parseInt page) 1)             
             (do      
-              (layout/common              
+             (layout/common              
                 [:a {:href (str "/search&" (dec (java.lang.Integer/parseInt page)) "&" search-term)} [:img {:src "../img/prev.png"}]]
-                (if (> (count movies) 9)      
+               (if (> (count movies) 9)      
                   [:a.next {:href (str "/search&" (inc (java.lang.Integer/parseInt page)) "&" search-term)} [:img {:src "../img/next.png"}]]                                                
-                  )
+                 )
                 )
               ))
           
-          (if (and (= (java.lang.Integer/parseInt page) 1) (> (count movies) 9))     
-            (layout/common
-              [:a {:href (str "/search&" 2 "&" search-term)} [:img {:src "../img/next.png"}]]            
+         (if (and (= (java.lang.Integer/parseInt page) 1) (> (count movies) 9))     
+           (layout/common
+             [:a {:href (str "/search&" 2 "&" search-term)} [:img {:src "../img/next.png"}]]            
               
-              )         
-            )
-          )
-        )
-      (if (and (not-empty search-term) (or (nil? movies) (empty? movies)))
-        (layout/common
-          [:p "Sorry, there is no more movies :("]
-          )
-        )    
-      )
-    )
+             )         
+           )
+         )
+       )
+     (if (and (not-empty search-term) (or (nil? movies) (empty? movies)))
+       (layout/common
+         [:p "Sorry, there is no more movies :("]
+         )
+       )    
+     )
+   )
   )
   
   (defn search-for-movies [search-term page]

@@ -9,5 +9,7 @@
      (include-css "/css/login.css")
      (include-css "/css/registration.css")
      (include-css "/css/home.css")
+     (include-css "/css/movie.css")
+     (include-css "/css/favorites.css")
      ]
     [:body body]))

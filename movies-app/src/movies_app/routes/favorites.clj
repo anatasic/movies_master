@@ -11,25 +11,34 @@
             [noir.session :as session]
             [noir.util.route :refer [restricted]]
             [noir.response :refer [redirect]]
-            [hiccup.form :refer :all]))
+            [hiccup.form :refer :all])
+            
+  )
 
 
 (defn display-favorites [username]
-  (layout/common
-    (home/logout)
-    [:h2 "Your favorite movies"]
+  (let [movies (db/find-favorites username)]
+  (layout/common    
+    (home/logout)  
+    [:h2.favTitle "Your favorite movies"]
+    (if (= (count movies) 0)
+      [:p "Wierd... You have no favorite movies."]
+      )
     (for [movie (db/find-favorites username)]
-      
       (let [about (util/get-details-movie (:movie movie))]
         (layout/common
+          [:div.favorites
           [:h2 (:title about)]
           [:img {:src (cs/replace (:detailed (:posters about)) "tmb" "det")}]        
           [:p (:synopsis about)]
           (form-to [:delete (str "/movie&" (:movie movie) "&" username)]
-                   (submit-button "Delete")
-                   )
+          [:input {:type "submit" :id "dltBtn" :value "Delete"} 
+           ]
+;          [:a {:href (str "/movie&" (:movie movie) "&" username)} "Delete"]
           )
-        
+          ]
+          )
+        )
         )
       )
     )
@@ -42,9 +51,7 @@
   (if (true?(movie-exists? username movie))
     (do
       (session/flash-put! :movie-exists "Movie is already in your list of favorite movies.")
-      (redirect (str "/movie&" movie))
-      
-      
+      (redirect (str "/movie&" movie))         
       ))
   (if (false?(movie-exists? username movie))
     (do
@@ -59,10 +66,8 @@
   )
 
 (defn get-favorites []
-  (let [user (str (session/get :username))]
-    
-    (display-favorites user)
-    
+  (let [user (str (session/get :username))]    
+    (display-favorites user)    
     )
   )
 

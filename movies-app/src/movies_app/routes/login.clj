@@ -37,28 +37,31 @@
   (let     
     [user (db/get-user (str(session/get :username)))]    
     (layout/common
-      [:div.header 
-       [:p "Update profile"
-        ]]
-      (form-to [:post "/update"]
-               (label :first-name "First name ")
-               (text-field {:value (:first-name user)} :first-name)
-               (label :last-name "Last name ")
-               (text-field {:value (:last-name user)} :last-name)
-               (label :email "Email ")
-               (text-field {:value (:email user)} :email) 
-               (label :username "Username ")
+      [:div.profile 
+       [:h1 "Update profile"]
+         (form-to [:post "/update"]
+            (label {:id "label"} :first-name "First name: ")
+               (text-field {:value (:first-name user) :id "firstName"} :first-name)
+               [:br]
+               (label {:id "label"} :last-name "Last name: ")
+               (text-field {:value (:last-name user) :id "lastName"} :last-name)
+               [:br]
+               (label {:id "label"} :email "Email: ")
+               (text-field {:value (:email user) :id "email"} :email) 
+               [:br]
+               (label {:id "label"} :username "Username: ")
                (text-field {:value (:username user)} :username) 
-               (label :password "Password ")
+               [:br]
+               (label {:id "label"} :password "Password: ")
                (text-field {:value (:password user)} :password )               
                [:br]
-               (submit-button "Save")
+               (submit-button {:id "btn"} "Save")
                [:br]
                [:br]
                [:div.error (session/flash-get :success-message)]
-               ))
+               )
     
-    ))
+   ] )))
 
 
 (defn register []

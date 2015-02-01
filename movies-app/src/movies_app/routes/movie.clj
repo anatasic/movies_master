@@ -14,14 +14,20 @@
   )
 
 (defn display-rating [movie]
+  (let [critics_rating (:critics_rating (:ratings movie))
+        audience_rating (:audience_rating (:ratings movie))
+        ]
+ 
   (layout/common
-    [:h2 "Ratings"]
-    [:p "Critics score: "(:critics_score (:ratings movie))]
-    [:p "Critics rating: "(:critics_rating (:ratings movie))]
+    [:h2 "Ratings"]   
+    [:p "Critics score: " (:critics_score (:ratings movie))]
+    [:p "Critics rating: " [:img {:src (str "../img/" critics_rating ".png") :title critics_rating}]]
     [:p "Audience score: "(:audience_score (:ratings movie))]
-    [:p "Audience rating: "(:audience_rating (:ratings movie))]
+    [:p "Audience rating: " [:img {:src (str "../img/" audience_rating ".png" ) :title audience_rating}]]
     )
   )
+      )
+  
 
 (defn display-genres [movie]
   (layout/common
@@ -53,9 +59,12 @@
   (let [similar-movies (util/get-similar-movies movie)]
     
     (layout/common 
-      [:h2 "You might also like"]
+      [:h2 "You might also like..."]
+      (if (= (count similar-movies) 0)
+        [:p "No similar movies to display."]
+        )
       (for [movie similar-movies]
-        [:a {:href (str "/movie&" (:id movie)) } [:img {:src (:thumbnail (:posters movie))}]]
+        [:a.similar {:href (str "/movie&" (:id movie)) } [:img {:src (:thumbnail (:posters movie)) :title (:title movie)}]]
         
         )
       )
@@ -66,6 +75,7 @@
     
     (layout/common
     (home/logout)
+      [:div.movie-details
       [:h1 "Details about movie"]
       [:p (session/flash-get :movie-exists)]
       [:img {:src (cs/replace (:detailed (:posters movie)) "_tmb" "_det")}]
@@ -78,13 +88,12 @@
       (display-cast movie)
       [:a {:href (str "/reviews&" movie-id)} "Click to see reviews..."]
       (display-similar movie-id)
-      (println (str "Username" (session/get :username)))
       (form-to [:post "/add-to-favorites"]
                [:input {:type "hidden" :name "movie" :value movie-id}]
                [:input {:type "hidden" :name "username" :value (session/get :username)}]
-               (submit-button "Add to favorites")
+               (submit-button {:id "favBtn"} "Add to favorites")
                )
-      )
+      ])
     ))
 
 (defroutes movie-routes 

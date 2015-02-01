@@ -4,14 +4,29 @@ width:50%;
  position: absolute;
  top: 20%;
  left: 20%;
-   
+
+}
+
+.profile{
+text-align: center;
+width:50%;
+ position: absolute;
+ top: 20%;
+ left: 20%;
+   background-color: #F0F0F0;
+   border: 4px solid #D00000; 
 }
 
 #firstName, #lastName, #password, #repeat, #email {
  padding: 2px;
- background-color: white !important;
  margin-bottom:10px;
  height: 10%;
  border-radius: 10px;
  border-color: #D00000;
+
+}
+
+#label {
+display:inline-block;
+ width: 80px; 
 }
