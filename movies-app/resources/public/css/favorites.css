@@ -1,0 +1,25 @@
+.favorites {
+background-color:#F8F8F8;
+width:70%;
+padding: 10px;
+margin-bottom:15px;
+font-style: italic;
+}
+
+.favTitle {
+
+    text-align: center;
+    color: #D00000;
+
+}
+
+#dltBtn{
+float:right;
+margin-top: -350px;
+ border-radius: 10px;
+ border-color: #D00000;
+ padding: 10px;
+ width: 8%;
+ font-weight:bold;
+ color:#D00000;
+}

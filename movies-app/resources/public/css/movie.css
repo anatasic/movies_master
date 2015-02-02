@@ -1,0 +1,27 @@
+.movie-details {
+width:70%;
+background-color:#F8F8F8;
+padding-left: 20px;
+padding-right: 20px;
+}
+
+.movie-details a {
+font-weight:bold;
+	color:#707070 ;
+	text-decoration: none;
+}
+
+.similar {
+padding-right: 15px;
+}
+
+#favBtn {
+float:right;
+margin-top: -1100px;
+ border-radius: 10px;
+ border-color: #D00000;
+ padding: 10px;
+ width: 15%;
+ font-weight:bold;
+ color:#D00000;
+}

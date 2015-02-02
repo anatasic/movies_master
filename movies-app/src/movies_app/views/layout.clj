@@ -11,5 +11,6 @@
      (include-css "/css/home.css")
      (include-css "/css/movie.css")
      (include-css "/css/favorites.css")
+     (include-css "/css/reviews.css")
      ]
     [:body body]))
