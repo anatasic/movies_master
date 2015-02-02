@@ -55,14 +55,15 @@
         (do
          (let [full-review (get-full-review review)]
         (layout/common
+          [:div.movie-details
           [:p "Critic: "(:critic review)]
           [:p "Date: "(:date review)]
           [:p "Freshness: " (:freshness review)]
           [:p "Published by: " (:publication review)]
           [:p "Quote: " (:quote review)]
           [:p "Full review: " [:a {:href (get-full-review review) :rel "canonical"} (get-full-review review)]]
-          [:hr]
-          )      
+          
+          ])      
         )))
       (if-not (nil? (:next(:links reviews)))
         ;      (println (:next(:links reviews)))
@@ -90,14 +91,15 @@
       [:p "Total number of reviews: " (:total reviews)]
       (for [review (:reviews reviews)]
         (layout/common
+          [:div.movie-details
           [:p "Critic: "(:critic review)]
           [:p "Date: "(:date review)]
           [:p "Freshness: " (:freshness review)]
           [:p "Published by: " (:publication review)]
           [:p "Quote: " (:quote review)]
           [:p "Full review: " [:a {:href (str "/full-review&"(get-full-review review)) :rel "canonical"} (get-full-review review)]]
-          [:hr]
-          )      
+          
+          ])      
         )
        (if-not (nil? (:prev(:links reviews)))
         (form-to {:id "next"} [:post "/prev-page-review"]

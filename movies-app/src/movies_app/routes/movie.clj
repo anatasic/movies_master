@@ -77,7 +77,7 @@
     (home/logout)
       [:div.movie-details
       [:h1 "Details about movie"]
-      [:p (session/flash-get :movie-exists)]
+      [:p (session/get! :movie-exists)]
       [:img {:src (cs/replace (:detailed (:posters movie)) "_tmb" "_det")}]
       [:p "Title: " (:title movie)]
       [:p "Duration: " (:runtime movie) " mins"]
