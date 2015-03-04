@@ -123,9 +123,12 @@
       )))
 
 (defn register-user [first-name last-name email username password repeat-password]
+  (println "register user")
   (let [errors (validate-registration first-name last-name email username password) ]
+    (println errors)
     (cond (= false errors)
           (do
+            (println "false")
             (session/flash-put! :error-message "All fields are mandatory.")
             (redirect "/register"))
           (> 5 (.length username))
@@ -177,6 +180,6 @@
   (GET "/register" [] (register))
   (GET "/edit-profile" [] (restricted (edit-profile)))
   (POST "/update" [first-name last-name email username password] (restricted (update-user {:first-name first-name :last-name last-name :email email :username username :password password})))
-  (POST "/register" [first-name last-name email username password repeat-password] (restricted (register-user first-name last-name email username password repeat-password))
+  (POST "/register" [first-name last-name email username password repeat-password]  (register-user first-name last-name email username password repeat-password)
         ))
 

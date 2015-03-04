@@ -71,11 +71,12 @@
     ))
 
 (defn show-details[movie-id]
-  (let [movie (util/get-details-movie movie-id)]
-    
+  (let [movie (util/get-details-movie movie-id)]    
     (layout/common
     (home/logout)
-      [:div.movie-details
+    [:div.movie-details
+    (form-to [:post "/add-to-favorites"]
+      
       [:h1 "Details about movie"]
       [:p (session/get! :movie-exists)]
       [:img {:src (cs/replace (:detailed (:posters movie)) "_tmb" "_det")}]
@@ -88,13 +89,13 @@
       (display-cast movie)
       [:a {:href (str "/reviews&" movie-id)} "Click to see reviews..."]
       (display-similar movie-id)
-      (form-to [:post "/add-to-favorites"]
+      
                [:input {:type "hidden" :name "movie" :value movie-id}]
                [:input {:type "hidden" :name "username" :value (session/get :username)}]
                (submit-button {:id "favBtn"} "Add to favorites")
-               )
-      ])
-    ))
+               
+      )]
+    )))
 
 (defroutes movie-routes 
   (GET "/movie&:id" [id] (restricted (show-details id)))
