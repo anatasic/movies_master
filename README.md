@@ -15,3 +15,43 @@ This application uses NoSQL database **mongoDB**. It can be downloaded on the fo
 You are also supposed to download and install [Leiningen](http://leiningen.org) in order to run this application.  It enables its user to create, bulid, test and deploy projects.
 
 ## Libraries used
+
+### [Ring](https://github.com/ring-clojure/ring) 
+
+This library, similarly to Compojure provides the native Clojure API for working with servlets. Ring acts as a wrapper around Java servlet and allows web applications to be constructed of modular components that can be shared among a variety of applications, web servers, and web frameworks.
+
+[ring "1.3.0"]
+
+### [Compojure](https://github.com/weavejester/compojure)
+
+Compojure is used to map request-handler functions to specific URLs. This is routing library for Ring.
+
+[compojure "1.1.8"]
+
+### [Hiccup](https://github.com/weavejester/hiccup) 
+
+Hiccup is library that is used for representing HTML in Clojure.
+
+### [Lib Noir](https://github.com/noir-clojure/lib-noir)
+
+Lib Noir presents set of utillities and helpers for handling common operations that can be found in web application. It involves features such as sessions, cookies, input validations etc.
+
+[lib-noir "0.8.4"]
+
+## References
+
+[Practical Clojure](http://www.amazon.com/Practical-Clojure-Experts-Voice-Source-ebook/dp/B003VM7G3S)
+
+Useful book for learning functional programming and basic functions in Clojure.
+
+[Clojure Programming](http://www.amazon.com/Clojure-Programming-Chas-Emerick/dp/1449394701/ref=pd_sim_b_1?ie=UTF8&refRID=0KCSHHVCSA3Z3YCX6JAF)
+
+This books helps to learn Clojure in depth in efficient way - comparing it with the languages that are more popular and well-known.
+
+[Web Development with Clojure](http://www.amazon.com/Web-Development-Clojure-Build-Bulletproof/dp/1937785645/ref=pd_sim_b_3?ie=UTF8&refRID=0KCSHHVCSA3Z3YCX6JAF)
+
+This book shows you how to apply Clojure programming fundamentals to build real-world solutions.
+
+## License
+
+Distributed under the Eclipse Public License, the same as Clojure.
