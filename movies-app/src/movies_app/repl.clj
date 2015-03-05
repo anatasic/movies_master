@@ -6,8 +6,7 @@
         [ring.middleware.stacktrace :only [wrap-stacktrace]]
         [ring.middleware.params :only [wrap-params]]
         [movies-app.models.database :only [init-db]])
-  (:require [clojure.data.json :as json]
-            [noir.session :as session]))
+  (:require [noir.session :as session]))
 
 (defonce server (atom nil))
 
