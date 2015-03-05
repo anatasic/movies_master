@@ -11,8 +11,7 @@
             [noir.session :as session]
             [noir.util.route :refer [restricted]]
             [noir.response :refer [redirect]]
-            [hiccup.form :refer :all])
-  
+            [hiccup.form :refer :all])  
   )
 
 
@@ -49,8 +48,8 @@
 
 (defn favorites[username movie]
   (if (true?(movie-exists? username movie))
-;    (db/add-favorite-movie username movie)
-;    (redirect "/favorites")
+    ;    (db/add-favorite-movie username movie)
+    ;    (redirect "/favorites")
     (do
       
       (session/put! :movie-exists "Movie is already in your list of favorite movies.")
@@ -59,26 +58,26 @@
       )
     (if (false?(movie-exists? username movie))
       (do
-       
+        
         (db/add-favorite-movie username movie)
         (display-favorites username))
       )
     )
-)
-  
-  (defn delete-movie [id username]
-    (db/delete-movie username id)
-    (display-favorites username)
+  )
+
+(defn delete-movie [id username]
+  (db/delete-movie username id)
+  (display-favorites username)
+  )
+
+(defn get-favorites []
+  (let [user (str (session/get :username))]    
+    (display-favorites user)    
     )
-  
-  (defn get-favorites []
-    (let [user (str (session/get :username))]    
-      (display-favorites user)    
-      )
-    )
-  
-  (defroutes favorites-routes  
-    (POST "/add-to-favorites" [username movie] (restricted (favorites username movie)))
-    (GET "/favorites"[] (restricted (get-favorites)))
-    (DELETE "/movie&:id&:username" [id username] (restricted (delete-movie id username)))
-    )
+  )
+
+(defroutes favorites-routes  
+  (POST "/add-to-favorites" [username movie] (restricted (favorites username movie)))
+  (GET "/favorites"[] (restricted (get-favorites)))
+  (DELETE "/movie&:id&:username" [id username] (restricted (delete-movie id username)))
+  )

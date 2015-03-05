@@ -62,14 +62,13 @@
   (let [url (str movie "&apikey=" (get-api-key))
         [code body] (scoop-url url)]
     (if (= code 200)         
-     (cheshire/parse-string body true)
-   )))
+      (cheshire/parse-string body true)
+      )))
 
 (defn get-similar-movies[movie-id] 
   (let [url (str "http://api.rottentomatoes.com/api/public/v1.0/movies/" movie-id ".json?apikey=" (get-api-key))
         [code body] (scoop-url url)]
-    (if (= code 200)         
-     
+    (if (= code 200)              
       (let [similar-movies (:similar (:links (cheshire/parse-string body true)))
             [code body] (scoop-url (str similar-movies "?apikey=" (get-api-key) ))]     
         (if (= code 200)
@@ -77,8 +76,8 @@
           )))))
 
 (defn read-review-next [next]
-   (let [url (str  next "&apikey=" (get-api-key))
+  (let [url (str  next "&apikey=" (get-api-key))
         [code body] (scoop-url url)]
-     (if (= code 200)
-          (cheshire/parse-string body true)
-          )))
+    (if (= code 200)
+      (cheshire/parse-string body true)
+      )))

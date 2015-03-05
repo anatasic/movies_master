@@ -39,35 +39,33 @@
     (layout/common
       [:div.profile 
        [:h1 "Update profile"]
-         (form-to [:post "/update"]
-            (label {:id "label"} :first-name "First name: ")
-               (text-field {:value (:first-name user) :id "firstName"} :first-name)
-               [:br]
-               (label {:id "label"} :last-name "Last name: ")
-               (text-field {:value (:last-name user) :id "lastName"} :last-name)
-               [:br]
-               (label {:id "label"} :email "Email: ")
-               (text-field {:value (:email user) :id "email"} :email) 
-               [:br]
-               (label {:id "label"} :username "Username: ")
-               (text-field {:value (:username user)} :username) 
-               [:br]
-               (label {:id "label"} :password "Password: ")
-               (text-field {:value (:password user)} :password )               
-               [:br]
-               (submit-button {:id "btn"} "Save")
-               [:br]
-               [:br]
-               [:div.error (session/flash-get :success-message)]
-               )
-    
-   ] )))
+       (form-to [:post "/update"]
+                (label {:id "label"} :first-name "First name: ")
+                (text-field {:value (:first-name user) :id "firstName"} :first-name)
+                [:br]
+                (label {:id "label"} :last-name "Last name: ")
+                (text-field {:value (:last-name user) :id "lastName"} :last-name)
+                [:br]
+                (label {:id "label"} :email "Email: ")
+                (text-field {:value (:email user) :id "email"} :email) 
+                [:br]
+                (label {:id "label"} :username "Username: ")
+                (text-field {:value (:username user)} :username) 
+                [:br]
+                (label {:id "label"} :password "Password: ")
+                (text-field {:value (:password user)} :password )               
+                [:br]
+                (submit-button {:id "btn"} "Save")
+                [:br]
+                [:br]
+                [:div.error (session/flash-get :success-message)]
+                )       
+       ] )))
 
 
 (defn register []
   "Register form"
-  (layout/common
-    
+  (layout/common    
     [:div.registration 
      [:h1 "Registration"]
      (form-to [:post "/register"]              
@@ -115,10 +113,8 @@
         (session/flash-put! :error-message "Wrong password.")
         (redirect "/"))
       :else 
-      (do 
-        
-        (session/put! :username username)
-        
+      (do        
+        (session/put! :username username)        
         (redirect "/home"))
       )))
 
@@ -160,17 +156,13 @@
   (print (str (session/get :username)))
   (let [existing-user (db/get-user (str (session/get :username)))
         new-user (merge existing-user user)]
-    (if-not (.equals (str (session/get :username)) (:username new-user))
-      
+    (if-not (.equals (str (session/get :username)) (:username new-user))      
       (session/put! :username (:username new-user))
       )
-    (db/update-user existing-user new-user)    
-    
+    (db/update-user existing-user new-user)        
     (session/flash-put! :success-message "Profile successfully updated.")
     (redirect "/edit-profile")
-    
     )
-  ;      (println (db/update-user))
   )
 
 (defroutes login-routes

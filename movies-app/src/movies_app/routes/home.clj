@@ -13,8 +13,7 @@
   (for [movie movies]
     (let [ ratings (:ratings movie)
           posters (:posters movie)
-          src "../img/details.png"
-          ]
+          src "../img/details.png"]
       [:div.movie
        (form-to [:get (str "/movie&" (:id movie)) ]                             
                 [:img {:src (:thumbnail posters)}]                
@@ -32,7 +31,7 @@
       [:a {:href "/logout"} "Logout"]
       [:a {:href "/edit-profile"} "Edit profile"]
       [:a {:href "/favorites"} "Favorite movies"]
-       [:a {:href "/home"} "Home"]
+      [:a {:href "/home"} "Home"]
       ]
      ]
     )  
@@ -40,65 +39,64 @@
 
 (defn home [movies search-term page]   
   (layout/common     
-   (logout)
-   [:h1 "Movies"]
+    (logout)
+    [:h1 "Movies"]
     [:p "Welcome to powerful Tomatoer!"]
-   [:br]    
+    [:br]    
     (form-to [:post "/search"] 
-            (if-not (nil? search-term)
+             (if-not (nil? search-term)
                (text-field {:value search-term} :search-term)
-              (text-field {:placeholder "Enter search term"} :search-term))
+               (text-field {:placeholder "Enter search term"} :search-term))
              (submit-button {:id "search"} "Search"))
-   (if-not (or (nil? movies) (empty? movies))
-     (do
-       (layout/common 
-         (list-of-movies movies)          
-         (if  (> (java.lang.Integer/parseInt page) 1)             
+    (if-not (or (nil? movies) (empty? movies))
+      (do
+        (layout/common 
+          (list-of-movies movies)          
+          (if  (> (java.lang.Integer/parseInt page) 1)             
             (do      
-             (layout/common              
+              (layout/common              
                 [:a {:href (str "/search&" (dec (java.lang.Integer/parseInt page)) "&" search-term)} [:img {:src "../img/prev.png"}]]
-               (if (> (count movies) 9)      
+                (if (> (count movies) 9)      
                   [:a.next {:href (str "/search&" (inc (java.lang.Integer/parseInt page)) "&" search-term)} [:img {:src "../img/next.png"}]]                                                
-                 )
+                  )
                 )
               ))
           
-         (if (and (= (java.lang.Integer/parseInt page) 1) (> (count movies) 9))     
-           (layout/common
-             [:a {:href (str "/search&" 2 "&" search-term)} [:img {:src "../img/next.png"}]]            
+          (if (and (= (java.lang.Integer/parseInt page) 1) (> (count movies) 9))     
+            (layout/common
+              [:a {:href (str "/search&" 2 "&" search-term)} [:img {:src "../img/next.png"}]]            
               
-             )         
-           )
-         )
-       )
-     (if (and (not-empty search-term) (or (nil? movies) (empty? movies)))
-       (layout/common
-         [:p "Sorry, there is no more movies :("]
-         )
-       )    
-     )
-   )
-  )
-  
-  (defn search-for-movies [search-term page]
-    (println "Searching for movies..." search-term)
-    (let [links-url (util/get-links-url)
-          template-url (util/get-template-url links-url)
-          movie-url (util/get-movies-url template-url search-term page)
-          movies-data (util/get-movies-data movie-url)]    
-      (home movies-data search-term page)))
-  
-  
-  (defroutes home-routes
-    (GET "/home" [] (restricted (home nil nil 1)))  
-    (GET "/search&:page&:search-term" [page search-term]  (restricted (search-for-movies search-term page)))
-    (POST "/search" [search-term] (restricted (search-for-movies search-term "1")))
-    (GET "/logout" [] (session/remove! :username) (redirect "/login"))  
+              )         
+            )
+          )
+        )
+      (if (and (not-empty search-term) (or (nil? movies) (empty? movies)))
+        (layout/common
+          [:p "Sorry, there is no more movies :("]
+          )
+        )    
+      )
     )
-  
-  
-  
-  
-  
-  
-  
+  )
+
+(defn search-for-movies [search-term page]
+  (println "Searching for movies..." search-term)
+  (let [links-url (util/get-links-url)
+        template-url (util/get-template-url links-url)
+        movie-url (util/get-movies-url template-url search-term page)
+        movies-data (util/get-movies-data movie-url)]    
+    (home movies-data search-term page)))
+
+
+(defroutes home-routes
+  (GET "/home" [] (restricted (home nil nil 1)))  
+  (GET "/search&:page&:search-term" [page search-term]  (restricted (search-for-movies search-term page)))
+  (POST "/search" [search-term] (restricted (search-for-movies search-term "1")))
+  (GET "/logout" [] (session/remove! :username) (redirect "/login"))  
+  )
+
+
+
+
+
+

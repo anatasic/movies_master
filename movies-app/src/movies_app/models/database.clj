@@ -23,8 +23,8 @@
   )
 
 (defn update-user[existing-user new-user]
-   (mc/update db "users" existing-user new-user {:multi false})
-)
+  (mc/update db "users" existing-user new-user {:multi false})
+  )
 
 (defn get-user [username]
   (mc/find-one-as-map db "users" {:username username}) 
